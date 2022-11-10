@@ -19,11 +19,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - dockerfile: Java/Corretto 11/Dockerfile
+          - dockerfile: Java/Corretto 11/
             image: ${{ github.repository }}/corretto_11
-          - dockerfile: Java/Corretto 17/Dockerfile
+          - dockerfile: Java/Corretto 17/
             image: ${{ github.repository }}/corretto_17
-          - dockerfile: Java/Corretto 19/Dockerfile
+          - dockerfile: Java/Corretto 19/
             image: ${{ github.repository }}/corretto_19
     permissions:
       contents: read # for actions/checkout to fetch code
@@ -37,12 +37,12 @@ jobs:
 
       - name: Build an image from Dockerfile
         run: |
-          docker build -t ${{ matrix.dockerfile }}:${{ github.sha }} ${{ matrix.dockerfile }}
+          docker build -t ${{ matrix.image }}:${{ github.sha }} '${{ matrix.dockerfile }}'
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
         with:
-          image-ref: ${{ matrix.dockerfile }}:${{ github.sha }}
+          image-ref: ${{ matrix.image }}:${{ github.sha }}
           format: 'template'
           template: '@/contrib/sarif.tpl'
           output: 'trivy-results.sarif'
