@@ -32,6 +32,8 @@ jobs:
             image: ${{ github.repository }}/corretto_11
           - dockerfile: Java/Corretto 17/Dockerfile
             image: ${{ github.repository }}/corretto_17
+          - dockerfile: Java/Corretto 19/Dockerfile
+            image: ${{ github.repository }}/corretto_19
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -92,6 +94,7 @@ jobs:
           
       # Scan image for GitHub Security tab
       - name: Run Trivy vulnerability scanner
+        if: github.event_name != 'pull_request'
         uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
         with:
           image-ref: ${{ steps.meta.outputs.tags }}@${{ steps.build-and-push.outputs.digest }}
@@ -101,6 +104,7 @@ jobs:
           
       # upload scan results to GitHub Security tab
       - name: Upload Trivy scan results to GitHub Security tab
+        if: github.event_name != 'pull_request'
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: 'trivy-results.sarif'
