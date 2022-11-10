@@ -32,6 +32,8 @@ jobs:
             image: ${{ github.repository }}/corretto_11
           - dockerfile: Java/Corretto 17/Dockerfile
             image: ${{ github.repository }}/corretto_17
+          - dockerfile: Java/Corretto 19/Dockerfile
+            image: ${{ github.repository }}/corretto_19
     runs-on: ubuntu-latest
     permissions:
       contents: read
