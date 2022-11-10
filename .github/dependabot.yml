@@ -9,3 +9,7 @@ updates:
     directory: "/Java/Corretto 17/" # Location of package manifests
     schedule:
       interval: "daily"
+  - package-ecosystem: "docker" # See documentation for possible values
+    directory: "/Java/Corretto 11/" # Location of package manifests
+    schedule:
+      interval: "daily"
