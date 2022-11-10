@@ -86,7 +86,7 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
         with:
-          image-ref: ${{ steps.meta.outputs.tags }@${{ steps.build-and-push.outputs.digest }}
+          image-ref: ${{ steps.meta.outputs.tags }}@${{ steps.build-and-push.outputs.digest }}
           scan-type: 'image'
           format: 'cosign-vuln'
           output: 'vuln.json'
@@ -97,7 +97,7 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
         with:
-          image-ref: ${{ steps.meta.outputs.tags }@${{ steps.build-and-push.outputs.digest }}
+          image-ref: ${{ steps.meta.outputs.tags }}@${{ steps.build-and-push.outputs.digest }}
           scan-type: 'image'
           format: 'cyclonedx'
           output: 'sbom.cdx.json'
