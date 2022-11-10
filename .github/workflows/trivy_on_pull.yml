@@ -19,11 +19,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - dockerfile: Java/Corretto 11/Dockerfile
+          - dockerfile: Java/Corretto 11/
             image: ${{ github.repository }}/corretto_11
-          - dockerfile: Java/Corretto 17/Dockerfile
+          - dockerfile: Java/Corretto 17/
             image: ${{ github.repository }}/corretto_17
-          - dockerfile: Java/Corretto 19/Dockerfile
+          - dockerfile: Java/Corretto 19/
             image: ${{ github.repository }}/corretto_19
     permissions:
       contents: read # for actions/checkout to fetch code
