@@ -1,1 +1,1 @@
-FROM amazoncorretto:19.0.0-al2
+FROM amazoncorretto:19.0.1-al2
