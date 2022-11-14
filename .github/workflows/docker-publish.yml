@@ -100,9 +100,8 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: ${{ env.GHCR_SLUG }}:${{ steps.meta.outputs.version }}@${{ steps.build-and-push.outputs.digest }}
-          format: 'template'
+          format: 'sarif'
           ignore-unfixed: true
-          template: '@/contrib/sarif.tpl'
           output: 'trivy-results.sarif'
           
       # upload scan results to GitHub Security tab
