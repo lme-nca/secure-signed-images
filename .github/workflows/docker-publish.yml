@@ -19,6 +19,7 @@ on:
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
+  GHCR_SLUG: ghcr.io/lme-nca/secure-signed-images/corretto_11
   # github.repository as <account>/<repo>
   # IMAGE_NAME: ${{ github.repository }}
 
@@ -89,7 +90,6 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           file: ${{ matrix.dockerfile }}
           tags: ${{ steps.meta.outputs.tags }}
-          sep-tags: "\n"
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -99,7 +99,7 @@ jobs:
         if: github.event_name != 'pull_request'
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ steps.meta.outputs.tags[0] }}@${{ steps.build-and-push.outputs.digest }}
+          image-ref: ${{ env.GHCR_SLUG }}:${{ steps.meta.outputs.version }}@${{ steps.build-and-push.outputs.digest }}
           format: 'template'
           ignore-unfixed: true
           template: '@/contrib/sarif.tpl'
@@ -117,7 +117,7 @@ jobs:
         if: github.event_name != 'pull_request'
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ steps.meta.outputs.tags[0] }}@${{ steps.build-and-push.outputs.digest }}
+          image-ref: ${{ env.GHCR_SLUG }}:${{ steps.meta.outputs.version }}@${{ steps.build-and-push.outputs.digest }}
           scan-type: 'image'
           format: 'cosign-vuln'
           output: 'vuln.json'
@@ -129,7 +129,7 @@ jobs:
         if: github.event_name != 'pull_request'
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ steps.meta.outputs.tags[0] }}@${{ steps.build-and-push.outputs.digest }}
+          image-ref: ${{ env.GHCR_SLUG }}:${{ steps.meta.outputs.version }}@${{ steps.build-and-push.outputs.digest }}
           scan-type: 'image'
           format: 'cyclonedx'
           output: 'sbom.cdx.json'
@@ -140,7 +140,7 @@ jobs:
           COSIGN_EXPERIMENTAL: "true"
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
-        run: echo "${{ steps.meta.outputs.tags[0] }}" | xargs -I {} cosign attest --type vuln --predicate vuln.json {}@${{ steps.build-and-push.outputs.digest }}
+        run: echo "${{ env.GHCR_SLUG }}:${{ steps.meta.outputs.version }}" | xargs -I {} cosign attest --type vuln --predicate vuln.json {}@${{ steps.build-and-push.outputs.digest }}
       
 
       - name: Sign the sBOM
@@ -149,7 +149,7 @@ jobs:
           COSIGN_EXPERIMENTAL: "true"
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
-        run: echo "${{ steps.meta.outputs.tags[0] }}" | xargs -I {} cosign attest --type cyclonedx --predicate sbom.cdx.json {}@${{ steps.build-and-push.outputs.digest }}
+        run: echo "${{ env.GHCR_SLUG }}:${{ steps.meta.outputs.version }}" | xargs -I {} cosign attest --type cyclonedx --predicate sbom.cdx.json {}@${{ steps.build-and-push.outputs.digest }}
       
 
       # Sign the resulting Docker image digest except on PRs.
@@ -163,5 +163,5 @@ jobs:
           COSIGN_EXPERIMENTAL: "true"
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
-        run: echo "${{ steps.meta.outputs.tags[0] }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
+        run: echo "${{ env.GHCR_SLUG }}:${{ steps.meta.outputs.version }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
         
