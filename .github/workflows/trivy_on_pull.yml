@@ -33,7 +33,7 @@ jobs:
     runs-on: "ubuntu-18.04"
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
       - name: Build an image from Dockerfile
         run: |
@@ -49,6 +49,6 @@ jobs:
           output: 'trivy-results.sarif'
 
       - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@4238421316c33d73aeea2801274dd286f157c2bb
         with:
           sarif_file: 'trivy-results.sarif'
