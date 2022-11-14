@@ -45,6 +45,7 @@ jobs:
           image-ref: ${{ matrix.image }}:${{ github.sha }}
           format: 'template'
           template: '@/contrib/sarif.tpl'
+          ignore-unfixed: true
           output: 'trivy-results.sarif'
 
       - name: Upload Trivy scan results to GitHub Security tab
