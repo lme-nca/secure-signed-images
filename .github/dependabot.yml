@@ -16,4 +16,9 @@ updates:
   - package-ecosystem: "docker" # See documentation for possible values
     directory: "/Java/Corretto 19/" # Location of package manifests
     schedule:
-      interval: "daily"
+      interval: "daily"\
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
