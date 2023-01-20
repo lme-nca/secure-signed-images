@@ -1,4 +1,4 @@
-FROM amazoncorretto:11.0.18-al2
+FROM amazoncorretto:19.0.2-al2
 
 RUN set -eux \
     && yum update -y \
