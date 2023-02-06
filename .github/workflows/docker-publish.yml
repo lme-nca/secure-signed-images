@@ -99,7 +99,7 @@ jobs:
       # Scan image for GitHub Security tab
       - name: Run Trivy vulnerability scanner
         if: github.event_name != 'pull_request'
-        uses: aquasecurity/trivy-action@9ab158e8597f3b310480b9a69402b419bc03dbd5
+        uses: aquasecurity/trivy-action@cff3e9a7f62c41dd51975266d0ae235709e39c41
         with:
           image-ref: ${{ env.GHCR_SLUG }}${{ matrix.image }}:${{ steps.meta.outputs.version }}@${{ steps.build-and-push.outputs.digest }}
           format: 'sarif'
@@ -116,7 +116,7 @@ jobs:
       # Scan image for attestation
       - name: Run Trivy vulnerability scanner
         if: github.event_name != 'pull_request'
-        uses: aquasecurity/trivy-action@9ab158e8597f3b310480b9a69402b419bc03dbd5
+        uses: aquasecurity/trivy-action@cff3e9a7f62c41dd51975266d0ae235709e39c41
         with:
           image-ref: ${{ env.GHCR_SLUG }}${{ matrix.image }}:${{ steps.meta.outputs.version }}@${{ steps.build-and-push.outputs.digest }}
           scan-type: 'image'
@@ -128,7 +128,7 @@ jobs:
       # Generate sBOM for attestation
       - name: Run Trivy vulnerability scanner
         if: github.event_name != 'pull_request'
-        uses: aquasecurity/trivy-action@9ab158e8597f3b310480b9a69402b419bc03dbd5
+        uses: aquasecurity/trivy-action@cff3e9a7f62c41dd51975266d0ae235709e39c41
         with:
           image-ref: ${{ env.GHCR_SLUG }}${{ matrix.image }}:${{ steps.meta.outputs.version }}@${{ steps.build-and-push.outputs.digest }}
           scan-type: 'image'
