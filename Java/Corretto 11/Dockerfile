@@ -1,4 +1,4 @@
-FROM amazoncorretto:11.0.19-al2@sha256:91241e76179a591d45c631e771dd567a450a3bdf319b73b078c8086e7f2fc658
+FROM amazoncorretto:11.0.21-al2@sha256:df2de1b82aa3829db8987014d44816ff3cc0e1d8c380e18abc878044aa387a48
 
 RUN set -eux \
     && yum update -y \
